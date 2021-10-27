@@ -1,0 +1,12 @@
+name = "canv-worker"
+type = "webpack"
+
+account_id = ""
+workers_dev = true
+route = ""
+zone_id = ""
+compatibility_date = "2021-10-27"
+
+kv_namespaces = [ 
+	{ binding = "CANVAS", id = "29f45a86c7f042a89f7a55de0a5ce9e0", preview_id = "29f45a86c7f042a89f7a55de0a5ce9e0" }
+]
