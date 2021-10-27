@@ -1,10 +1,14 @@
 import { Router } from 'itty-router';
 
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-type': 'application/json'
+};
 const router = Router();
 
 router.get('/canvas', async () => {
     const canvas = await CANVAS.get('canvas');
-    return new Response(canvas);
+    return new Response(canvas, { headers });
 });
 
 router.get('/canvas/:id', async ({ params }) => {
@@ -16,7 +20,7 @@ router.get('/canvas/:id', async ({ params }) => {
     const canvas = JSON.parse(await CANVAS.get('canvas'));
     const pixel = canvas[id];
 
-    return new Response(JSON.stringify(pixel));
+    return new Response(JSON.stringify(pixel), { headers });
 });
 
 router.post('/canvas/:id', async (request) => {
@@ -36,7 +40,7 @@ router.post('/canvas/:id', async (request) => {
 
     await CANVAS.put('canvas', JSON.stringify(canvas));
 
-    return new Response('ok');
+    return new Response('ok', { headers });
 });
 
 router.all('*', () => new Response('404, not found!', { status: 404 }));
