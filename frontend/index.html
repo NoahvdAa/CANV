@@ -3,11 +3,29 @@
 
 <head>
 	<title>CANV</title>
+
+	<link rel="stylesheet" type="text/css" href="app.css">
 </head>
 
 <body>
 	<canvas id="canvas" width=1000 height=1000></canvas>
-	<div id="colors"></div>
+	<div class="toolbar">
+		<div id="colors"></div>
+		<div id="pixel-info">
+			<p>
+				Pixel at <span id="pixel-x">0</span>,<span id="pixel-y">0</span> (<span id="pixel-coord">0</span>):
+				<br>
+				Last edited:
+				<br>
+				<span id="pixel-last-edited">never</span>
+			</p>
+		</div>
+		<div id="info">
+			<p>Your changes are saved every 15 seconds, or on page exit/reload. After your changes have been saved,
+				changes made by others will be loaded.</p>
+			<a href="https://github.com/NoahvdAa/CANV" target="_blank">[Github / Explanation]</a>
+		</div>
+	</div>
 	<script src="app.js" type="text/javascript"></script>
 </body>
 

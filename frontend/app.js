@@ -1,7 +1,7 @@
 const colors = ['FFFFFF', 'E4E4E4', '888888', '222222', 'FFA7D1', 'E50000', 'E59500', 'A06A42', 'E5D900', '94E044', '02BE01', '00D3DD', '0083C7', '0000EA', 'CF6EE4', '820080'];
 
 var canvas = [];
-var color = 1;
+var color = 3;
 var pendingChanges = [];
 
 const canv = document.getElementById('canvas');
@@ -14,7 +14,13 @@ for (var i = 0; i < 10000; i++) {
 const clrs = document.getElementById('colors');
 for (const color in colors) {
 	const colorHex = colors[color];
-	clrs.innerHTML += `<a onclick="color = ${color};" style="background: #${colorHex}; padding: 25px; border: 1px solid black;"></a>`;
+	clrs.innerHTML += `<a onclick="setColor(${color});" style="background: #${colorHex};" data-color="${color}" class="color"></a>`;
+}
+
+function setColor(newColor) {
+	document.querySelectorAll('.color-selected').forEach(c => c.classList.remove('color-selected'));
+	document.querySelector(`[data-color='${newColor}']`).classList.add('color-selected');
+	color = newColor;
 }
 
 canv.addEventListener('click', (event) => {
@@ -24,15 +30,41 @@ canv.addEventListener('click', (event) => {
 	const x = event.pageX - offsetLeft;
 	const y = event.pageY - offsetTop;
 
-	const canvX = Math.floor(x / 10);
-	const canvY = Math.floor(y / 10);
+	const canvX = Math.floor(x / (canv.clientWidth / 100));
+	const canvY = Math.floor(y / (canv.clientHeight / 100));
 
 	const coord = (canvY * 100) + canvX;
 
 	pendingChanges.push([coord, color]);
 
+	canv[coord] = [color, new Date().getTime()];
+
 	ctx.fillStyle = `#${colors[color].toLowerCase()}`;
 	ctx.fillRect(canvX * 10, canvY * 10, 10, 10);
+});
+
+const pixelX = document.getElementById('pixel-x');
+const pixelY = document.getElementById('pixel-y');
+const pixelCoord = document.getElementById('pixel-coord');
+const pixelLastEdited = document.getElementById('pixel-last-edited');
+
+canv.addEventListener('mousemove', (event) => {
+	const offsetLeft = canv.offsetLeft + canv.clientLeft;
+	const offsetTop = canv.offsetTop + canv.clientTop;
+
+	const x = event.pageX - offsetLeft;
+	const y = event.pageY - offsetTop;
+
+	const canvX = Math.floor(x / (canv.clientWidth / 100));
+	const canvY = Math.floor(y / (canv.clientHeight / 100));
+
+	const coord = (canvY * 100) + canvX;
+	const lastModified = canvas[coord][1];
+
+	pixelX.innerText = canvX;
+	pixelY.innerText = canvY;
+	pixelCoord.innerText = coord;
+	pixelLastEdited.innerText = lastModified ? new Date(lastModified).toLocaleString() : 'never';
 });
 
 async function updateCanvas() {
@@ -80,3 +112,4 @@ setInterval(async () => {
 	await savePendingChanges();
 	await updateCanvas();
 }, 15000);
+setColor(color);
