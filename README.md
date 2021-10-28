@@ -1,6 +1,6 @@
 # CANV
 
-[Live demo](https://canv.noahvdaa.me)
+[Live demo](https://canv.pages.dev/)
 
 CANV is a "community canvas", created for the [Cloudflare Summer Challenge](https://challenge.developers.cloudflare.com). The frontend is hosted on [Cloudflare Pages](https://developers.cloudflare.com/pages/). The backend is hosted on [Cloudflare Workers](https://developers.cloudflare.com/workers/), using [Cloudflare Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works) for storage. CANV is inspired by [r/place](https://en.wikipedia.org/wiki/Place_(Reddit)) and [pxls.space](https://pxls.space).
 
